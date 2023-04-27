@@ -2,13 +2,36 @@
 	export let name;
 	import Mainroom from "./Mainroom.svelte";
 	import ChatBox from "./ChatBox.svelte";
+	import { onMount } from 'svelte';
+	import Menu from './Menu.svelte';
+
 	let hidden = false;
+	let showMenu = false;
+	let blur = false;
+
+	onMount(() => {
+		window.addEventListener('keydown', handleKeyDown);
+	});
+
+	function handleKeyDown(event) {
+		if (event.key === 'Escape') {
+			console.log('Escape key pressed')
+			showMenu = !showMenu;
+		}
+	}
 </script>
 
-<main>
-	<Mainroom bind:hidden={hidden}/>
-	<ChatBox bind:hidden={hidden}/>
-</main>
+
+<div>
+	{#if showMenu}
+	  <Menu />
+	{/if}
+
+	<main>
+		<Mainroom bind:hidden={hidden}/>
+		<ChatBox bind:hidden={hidden}/>
+	</main>
+</div>
 
 <style>
 	:global(body) {
@@ -21,6 +44,10 @@
 		/* padding: 1em; */
 		/* max-width: 240px; */
 		/* margin: 0 auto; */
+	}
+
+	.blurred {
+		filter: blur(5px);
 	}
 
 	@media (min-width: 640px) {

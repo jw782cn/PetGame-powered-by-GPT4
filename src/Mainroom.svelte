@@ -39,6 +39,7 @@
     width: 100%;
     height: 100vh;
     position: relative; 
+    z-index: 0;
   }
 
   .game-scene {
