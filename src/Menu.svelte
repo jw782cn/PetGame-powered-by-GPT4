@@ -7,9 +7,9 @@
       <h1 class="title">Game Menu</h1>
       <ul class="menu-items">
         <li class="menu-item"><a href="/">Home</a></li>
-        <li class="menu-item"><a href="/game">Start Game</a></li>
-        <li class="menu-item"><a href="/settings">Settings</a></li>
-        <li class="menu-item"><a href="/about">About</a></li>
+        <li class="menu-item"><a href="/">Start Game</a></li>
+        <li class="menu-item"><a href="/">Settings</a></li>
+        <li class="menu-item"><a href="https://github.com/jw782cn/PetGame">About</a></li>
       </ul>
     </div>
   
