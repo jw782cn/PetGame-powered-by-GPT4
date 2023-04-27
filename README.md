@@ -15,17 +15,23 @@ Our vision is to develop a mobile app featuring a medical-use virtual pet game t
 
 ## Project Idea:
 
-The proposed medical-use virtual pet game will feature captivating content, such as cute pet avatars, that encourage daily patient engagement. The app will enable patients to perform daily self-assessments and decrease the distance between them and their respective clinics. Users will be able to reach out for support easily through the app, as they experience the recovery process alongside their virtual pets. By caring for their virtual pets, patients will develop the skills necessary to care for themselves.
+The proposed medical-use virtual pet game feature captivating content, such as cute pet avatars, that encourage daily patient engagement. The app enables patients to perform daily self-assessments and decrease the distance between them and their respective clinics. Users are able to reach out for support easily through the app, as they experience the recovery process alongside their virtual pets. By caring for their virtual pets, patients  develop the skills necessary to care for themselves.
 
-The game will incorporate features such as text-based interactions with the virtual pet, using advanced AI technologies like ChatGPT to create dynamic, personalized conversations. The game will also offer a rewarding and engaging experience that ties in with the patient's reality, helping them develop self-awareness and self-care skills.
+The game incorporates features such as text-based interactions with the virtual pet, using advanced AI technologies like ChatGPT to create dynamic, personalized conversations. The game  also offer a rewarding and engaging experience that ties in with the patient's reality, helping them develop self-awareness and self-care skills.
 
 We envision our target users dedicating at least 30 minutes daily to the app, engaging in self-assessments and caring for their virtual pets through various in-app actions.
 
 ## Game Plot
 
-Upon registering, users will receive a virtual egg, which they will hatch to reveal a cute pet avatar (randomly generated). The pet is unable to fly due to its inability to care for itself. Users will then embark on a journey with their virtual pets, overcoming obstacles and challenges as they grow and learn together. By nurturing their pets with love, users will gradually develop the skills needed to overcome their addiction.
+Upon registering, users  receive a virtual pet. The pet is unable to fit in its social environment due to its inability to care for itself. Users  then embark on a journey with their virtual pets, overcoming obstacles and challenges as they grow and learn together. By nurturing their pets with love, users  gradually develop the skills needed to overcome their addiction.
 
 Considerations for Target Audience:
-When designing the app and addressing the needs of patients at ASAM levels 2.5 to 3.1, we will carefully consider the specific challenges faced by this group. We will adapt the app's content, user experience, and support mechanisms to cater to their unique requirements, ensuring that the app effectively aids them in their recovery journey.
+
+When designing the app and addressing the needs of patients at ASAM levels 2.5 to 3.1, we carefully consider the specific challenges faced by this group. We adapt the app's content, user experience, and support mechanisms to cater to their unique requirements, ensuring that the app effectively aids them in their recovery journey.
 
 ## Appendix:
+
+The ASAM levels of care include:
+
+- **Level 2.5** is partial hospitalization, which is at least 20 hours a week but is less than 24-hour care. This level of care provides structure, and daily oversight for people who need daily monitoring, but not 24/7 care.
+- **Level 3.1** is clinically managed low-intensity residential treatment. [Residential services](https://americanaddictioncenters.org/rehab-guide/residential) at this level consist of a setting, such as a group home, where people live. However, treatment is only required to be 5 hours per week, which helps people with such topics as relapse management.
