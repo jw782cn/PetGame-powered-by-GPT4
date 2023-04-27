@@ -11,6 +11,8 @@
 	let blur = false;
 	let space = "room";
 	let information = "";
+	let apikey = "";
+	$: console.log(apikey);
 
 	onMount(() => {
 		window.addEventListener('keydown', handleKeyDown);
@@ -27,12 +29,12 @@
 
 <div>
 	{#if showMenu}
-	  <Menu />
+	  <Menu bind:apikey={apikey}/>
 	{/if}
 
 	<main>
-		<Mainroom bind:hidden={hidden} bind:space={space} bind:information={information}/>
-		<ChatBox bind:hidden={hidden} bind:information={information}/>
+		<Mainroom bind:hidden={hidden} bind:space={space} bind:information={information} />
+		<ChatBox bind:hidden={hidden} bind:information={information} bind:apikey={apikey}/>
 	</main>
 </div>
 

@@ -1,10 +1,15 @@
 <script>
   import { fade } from "svelte/transition";
+  import { apikey } from "./store.ts";
+  import ApiKeyModal from './ApiKeyModal.svelte';
+  let openApiKeyModal = false;
   export let information = "";
   export let messages = [
     { content: "Hi, I'm Raby. How can I help you Today?", role: "assistant" },
   ];
   export let hidden = false;
+
+  $: console.log($apikey);
 
   const guidance = `
   Guidance: 
@@ -39,7 +44,7 @@
           headers: {
             "Content-Type": "application/json",
             Authorization:
-              "Bearer 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",
+              "Bearer " + $apikey,
           },
           body: JSON.stringify({
             model: "gpt-3.5-turbo",
@@ -85,6 +90,12 @@
 
 </script>
 
+<ApiKeyModal
+  bind:open={openApiKeyModal}
+  setOpen={(value) => (openApiKeyModal = value)}
+  setApiKey={(value) => (apiKey = value)}
+/>
+
 {#if hidden}
   <div
     class="chat-container"
@@ -105,11 +116,14 @@
       <input
         type="text"
         bind:value={newMessage}
-        placeholder="Type your message"
+        placeholder={$apikey === "" ? "please set apikey in settings" : "Type your message"}
         on:keydown={(e) => e.key === "Enter" && sendMessage()}
-        disabled={typing}
+        disabled={typing || $apikey === ""}
       />
-      <button on:click={sendMessage}>Send</button>
+      {#if $apikey === ""}
+      <button on:click={() => (openApiKeyModal = true)} >Set Api Key</button>
+      {/if}
+      <button on:click={sendMessage} disabled={typing || $apikey === ""}>Send</button>
     </div>
   </div>
 {/if}
@@ -207,6 +221,12 @@
     border: none;
     border-radius: 20px;
     cursor: pointer;
+  }
+
+  button:disabled {
+    background-color: #ccc;
+    color: #fff;
+    cursor: not-allowed;
   }
 
   button:hover {
