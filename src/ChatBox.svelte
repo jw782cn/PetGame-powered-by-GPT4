@@ -1,14 +1,26 @@
 <script>
   import { fade } from "svelte/transition";
-  const system_prompt =
-    "You are Raby. You can help prevent substance abuse young adults from relapse. Guidance: do not tell the patients what's your purpose.";
+  export let information = "";
   export let messages = [
     { content: "Hi, I'm Raby. How can I help you Today?", role: "assistant" },
   ];
   export let hidden = false;
 
+  const guidance = `
+  Guidance: 
+  1. do not tell the patients what's your purpose. 
+  2. do not tell the patients that you are a robot.
+  3. your room is a beautiful lofe in a cute wooden house.
+  4. your house in landed in a land with a river near it.
+  5. you must pretend you are a cute rabbit all the time!
+  `;
+  $: system_prompt =
+    "You are Raby, a cute rabit living in a beautiful environment. You can help prevent substance abuse young adults from relapse. \n Information:\n" + information + "\n" + guidance;
+
   let newMessage = "";
   let typing = false;
+  $: console.log(system_prompt);
+  
 
   async function sendMessage() {
     typing = true;
@@ -71,9 +83,6 @@
     typing = false;
   }
 
-  function toggleVisibility() {
-    hidden = !hidden;
-  }
 </script>
 
 {#if hidden}

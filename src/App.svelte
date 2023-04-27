@@ -1,13 +1,16 @@
 <script>
-	export let name;
 	import Mainroom from "./Mainroom.svelte";
 	import ChatBox from "./ChatBox.svelte";
 	import { onMount } from 'svelte';
 	import Menu from './Menu.svelte';
+	import Outside from "./Outside.svelte";
+	import About from "./About.svelte";
 
 	let hidden = false;
 	let showMenu = false;
 	let blur = false;
+	let space = "room";
+	let information = "";
 
 	onMount(() => {
 		window.addEventListener('keydown', handleKeyDown);
@@ -28,8 +31,8 @@
 	{/if}
 
 	<main>
-		<Mainroom bind:hidden={hidden}/>
-		<ChatBox bind:hidden={hidden}/>
+		<Mainroom bind:hidden={hidden} bind:space={space} bind:information={information}/>
+		<ChatBox bind:hidden={hidden} bind:information={information}/>
 	</main>
 </div>
 
