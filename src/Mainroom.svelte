@@ -1,6 +1,37 @@
 <script>
   import { onMount } from 'svelte';
 
+  let audio;
+  let isPlaying = false;
+  let spinning = false;
+
+  onMount(async () => {
+    try {
+      const response = await fetch("/music/if-the-night-never-ends-no-oohs-ahhs-sad-moses-musicbed.mp3");
+      const musicBlob = await response.blob();
+      const musicURL = URL.createObjectURL(musicBlob);
+      audio = new Audio(musicURL);
+      audio.loop = true;
+      audio.volume = 0.5;
+      audio.play();
+      spinning = true;
+      isPlaying = true;
+    } catch (error) {
+      console.error("Error fetching the music file:", error);
+    }
+  });
+
+  function toggleMusic() {
+    if (isPlaying) {
+      audio.pause();
+      spinning = false;
+    } else {
+      audio.play();
+      spinning = true;
+    }
+    isPlaying = !isPlaying;
+  }
+
   export let hidden = false;
   export let space = "room";
   export let information = "";
@@ -58,8 +89,10 @@
     <div class="loading-spinner"></div>
 {:else}
 <div class="game-scene-container">
-  
   <div class="game-scene {isHovered || hidden ? 'blurred' : ''}" style="background-image: url({background_path});">
+    <div class="music-button {spinning ? 'spinning' : ''}" on:click={toggleMusic}>
+      <button>𝄞</button>
+    </div>
     {#if background_images[space]["left"]}
       <div class="triangle-button left" on:click={handleLeft}></div>
     {/if}
@@ -126,6 +159,7 @@
 
   .hovered {
     transform: scale(1.1);
+    outline: #FFC485;
   }
 
   .hidden {
@@ -195,6 +229,48 @@
     to {
       transform: rotate(360deg);
     }
+  }
+
+
+  .music-button {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    margin: 0%;
+    z-index: 1;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform-origin: center center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .music-button:hover {
+    transform: scale(1.2);
+  }
+
+  .music-button:hover::before {
+  }
+
+  .music-button button {
+    background: #FFC485;
+    border: none;
+    width: 50px;
+    height: 50px;
+    margin: 0%;
+    font-size: 25px;
+    outline: none;
+    border-radius: 100%;
+    cursor: pointer;
+    color: #ff991c;
+  }
+
+  .spinning {
+    animation: spin 3s linear infinite;
   }
 
 </style>
