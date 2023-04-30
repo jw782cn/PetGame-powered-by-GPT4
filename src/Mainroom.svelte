@@ -4,6 +4,7 @@
   let audio;
   let isPlaying = false;
   let spinning = false;
+  export let showMenu = false;
 
   onMount(async () => {
     try {
@@ -83,6 +84,14 @@
     space = background_images[space]["right"];
   }
 
+  //TODO：change backgrounds
+  // {#if background_images[space]["left"]}
+  //     <div class="triangle-button left" on:click={handleLeft}></div>
+  //   {/if}
+  //   {#if background_images[space]["right"]}
+  //     <div class="triangle-button right" on:click={handleRight}></div>
+  //   {/if}
+
 </script>
 
 {#if isLoading}
@@ -90,15 +99,13 @@
 {:else}
 <div class="game-scene-container">
   <div class="game-scene {isHovered || hidden ? 'blurred' : ''}" style="background-image: url({background_path});">
+    <div class="header-wrapper" on:click={()=>{showMenu = true;}}>
+      <h1 class="header">Raby🐰's house</h1>
+    </div>
+    
     <div class="music-button {spinning ? 'spinning' : ''}" on:click={toggleMusic}>
       <button>𝄞</button>
     </div>
-    {#if background_images[space]["left"]}
-      <div class="triangle-button left" on:click={handleLeft}></div>
-    {/if}
-    {#if background_images[space]["right"]}
-      <div class="triangle-button right" on:click={handleRight}></div>
-    {/if}
   </div>
   <div class="animal-container">
     <img
@@ -114,6 +121,34 @@
 {/if}
 
 <style>
+
+.header {
+  position: absolute;
+  font-size: 2rem;
+  font-weight: bold;
+  font-family: Comic Sans MS;
+  color: white;
+  margin: 0;
+}
+.header-wrapper {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 350px;
+  height: 60px;
+  display: flex;
+  background-color: #FFC485;
+  border-radius: 20px;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 4px 8px #FFA848; /* Add box-shadow here */
+}
+
+.header-wrapper:hover {
+  transform: scale(1.05);
+}
 
 .game-scene-container {
     width: 100%;
@@ -246,14 +281,11 @@
     justify-content: center;
     align-items: center;
     transform-origin: center center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 8px #FFA848; /* Add box-shadow here */
   }
 
   .music-button:hover {
     transform: scale(1.2);
-  }
-
-  .music-button:hover::before {
   }
 
   .music-button button {

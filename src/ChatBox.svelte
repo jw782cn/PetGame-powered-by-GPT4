@@ -6,6 +6,7 @@
 
   let openApiKeyModal = false;
   let choices = [];
+  let firstTimeHint = "Your task to help Raby...Say hi to Raby!";
 
   export let hidden = false;
   export let messages = [];
@@ -167,6 +168,11 @@
   >
     <div class="chat-title">Raby🐰</div>
     <div class="messages-wrapper" bind:this={messagesContainer}>
+        <div class="message hint">
+          <div class="message-text" in:fade={{ delay: 500 }}>
+            {firstTimeHint}
+          </div>
+        </div>
       {#each messages as message}
         <div class="message {message.role}">
           <div class="message-text" in:fade={{ delay: 80 }}>
@@ -174,6 +180,13 @@
           </div>
         </div>
       {/each}
+      {#if choices.length > 0}
+        <div class="message hint">
+          <div class="message-text" in:fade={{ delay: 80 }}>
+            You could say...
+          </div>
+        </div>
+      {/if}
       {#each choices as choice}
         <div class="message choice">
           <div class="message-text" in:fade={{ delay: 80 }} on:click={handleChoice}>
@@ -202,8 +215,8 @@
   .chat-container {
     display: flex;
     flex-direction: column;
-    height: 450px;
-    width: 500px;
+    height: 500px;
+    width: 600px;
     max-width: 600px;
     border: 1px solid #ccc;
     background-color: #f2f2f2;
@@ -274,6 +287,15 @@
     cursor: grab;
   }
 
+  .message.hint {
+    justify-content: center;
+  }
+
+  .message.hint .message-text {
+    background-color: transparent;
+    font-size: 14px;
+    color: rgb(255, 172, 113);
+  }
 
   .message.assistant .message-text {
     background-color: #fff;
@@ -292,6 +314,10 @@
     border: 1px solid #ccc;
   }
 
+  input:focus {
+    outline: 2px solid rgb(255, 146, 68);
+  }
+
   button {
     margin-left: 8px;
     padding: 8px 12px;
@@ -300,6 +326,7 @@
     border: none;
     border-radius: 20px;
     cursor: pointer;
+    transition: all 0.2s ease-in-out;
   }
 
   button:disabled {

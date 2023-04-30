@@ -1,13 +1,18 @@
 <script>
 	import Mainroom from "./Mainroom.svelte";
 	import ChatBox from "./ChatBox.svelte";
+	import Information from "./Information.svelte";
 	import { onMount } from 'svelte';
 	import Menu from './Menu.svelte';
+	import { current_task } from "./store.ts";
+	import Complete from "./Complete.svelte";
 
 	let hidden = false;
 	let showMenu = false;
+	let showInfo = true;
 	let space = "room";
 	let name = "Raby";
+	$: console.log(showInfo, "showinfo");
 
 	onMount(() => {
 		window.addEventListener('keydown', handleKeyDown);
@@ -23,12 +28,18 @@
 
 
 <div>
+	{#if showInfo}
+	  <Information bind:showInfo={showInfo}/>
+	{/if}
 	{#if showMenu}
-	  <Menu />
+	  <Menu bind:showInfo={showInfo}/>
+	{/if}
+	{#if $current_task == "complete"}
+	 <Complete />
 	{/if}
 
 	<main>
-		<Mainroom bind:hidden={hidden} bind:space={space} />
+		<Mainroom bind:hidden={hidden} bind:space={space} bind:showMenu={showMenu}/>
 		<ChatBox bind:hidden={hidden} />
 	</main>
 </div>

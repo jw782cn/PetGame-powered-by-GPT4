@@ -19,6 +19,11 @@ export const progress_of_current_task = writable("0.1");
 export const patient_information = writable(`
 Sam is 20 years old and had substance abuse for 1 year. He has some difficulty communicating with his parents.
 `);
+export const description = writable([
+    'You meets Raby, who is feeling upset and controlled by its mom.',
+    "Raby wants to go outside and play, but its mom insists that it stays home to do homework.",
+    "Raby needs Your help to navigate this difficult situation.",
+  ]);
 
 
 

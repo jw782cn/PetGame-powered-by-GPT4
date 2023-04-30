@@ -4,6 +4,7 @@
   import { apikey } from "./store.ts";
 
   let openApiKeyModal = false;
+  export let showInfo = false;
 
 </script>
 
@@ -17,8 +18,8 @@
 <div class="menu" transition:fade={{ duration: 100 }}>
   <h1 class="title">Game Menu</h1>
   <ul class="menu-items">
-    <li class="menu-item"><a href="/">Home</a></li>
-    <li class="menu-item"><a href="/">Start Game</a></li>
+    <li class="menu-item"><a href="/">Restart</a></li>
+    <li class="menu-item"><a on:click={() => (showInfo = true)}>Show Info</a></li>
     <li class="menu-item"><a on:click={() => (openApiKeyModal = true)}>Settings</a></li>
     <li class="menu-item">
       <a href="https://github.com/jw782cn/PetGame">About</a>
@@ -37,7 +38,8 @@
     align-items: center;
     justify-content: center;
     position: fixed;
-    z-index: 999;
+    z-index: 800;
+    font-family: Comic Sans MS;
   }
 
   .title {
@@ -49,6 +51,7 @@
     list-style: none;
     padding: 0;
     margin: 0;
+    cursor: pointer;
   }
 
   .menu-item {
