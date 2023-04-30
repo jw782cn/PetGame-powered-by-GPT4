@@ -1,41 +1,47 @@
 <script>
   import { fade } from "svelte/transition";
-  import { apikey } from "./store.ts";
+  import { apikey, task, game_plot_outline, patient_information, username, example, current_task, progress_of_current_task} from "./store.ts";
+  import { afterUpdate } from "svelte";
   import ApiKeyModal from './ApiKeyModal.svelte';
+
   let openApiKeyModal = false;
-  export let information = "";
-  export let messages = [
-    { content: "Hi, I'm Raby. How can I help you Today?", role: "assistant" },
-  ];
+  let choices = [];
+
   export let hidden = false;
+  export let messages = [];
+  
+  // dev mode only
+  $apikey = "";
+  // $: console.log($apikey);
 
-  $: console.log($apikey);
-
-  const guidance = `
-  Guidance: 
-  1. do not tell the patients what's your purpose. 
-  2. do not tell the patients that you are a robot.
-  3. your room is a beautiful lofe in a cute wooden house.
-  4. your house in landed in a land with a river near it.
-  5. you must pretend you are a cute rabbit all the time!
-  `;
-  $: system_prompt =
-    "You are Raby, a cute rabit living in a beautiful environment. You can help prevent substance abuse young adults from relapse. \n Information:\n" + information + "\n" + guidance;
+  function assembleMessage() {
+    const system_prompt = task + $game_plot_outline + $patient_information + example;
+    let chat_history = "chat history: \n";
+    messages.forEach((message) => {
+      if (message.role === "user") {
+        chat_history += $username + ": " + message.content + "\n";
+      } else if (message.role === "assistant") {
+        chat_history += "Raby: " + message.content + "\n";
+      }
+    });
+    chat_history += "Raby: ";
+    const user_input = "current task: " + $current_task + "\n" + "progess: " 
+    + $progress_of_current_task + "\n" + chat_history
+    + "\nREMEMBER: each output line should start with 🐰.";
+    return [{ content: system_prompt, role: "system" }, { content: user_input, role: "user" }];
+  }
 
   let newMessage = "";
   let typing = false;
-  $: console.log(system_prompt);
   
 
   async function sendMessage() {
+    choices = [];
     typing = true;
     if (newMessage.trim() !== "") {
       messages = [...messages, { content: newMessage, role: "user" }];
       newMessage = "Raby is typing...";
-      const messages_for_openai = [
-        { content: system_prompt, role: "system" },
-        ...messages.slice(1, messages.length),
-      ];
+      const messages_for_openai = assembleMessage();
       console.log(messages_for_openai);
       const response = await fetch(
         "https://api.openai.com/v1/chat/completions",
@@ -47,17 +53,21 @@
               "Bearer " + $apikey,
           },
           body: JSON.stringify({
-            model: "gpt-3.5-turbo",
+            model: "gpt-4",
             messages: messages_for_openai,
             temperature: 0.6,
-            max_tokens: 100,
-            stop: ["\n", "Human:", "AI:"],
+            max_tokens: 200,
             stream: true,
           }),
         }
       );
       const reader = response.body.getReader();
       let content = "";
+      let all_content = "";
+      let current = -1;
+      let choice = "";
+      $current_task = "";
+      $progress_of_current_task = "";
       messages = [...messages, { content: "", role: "assistant" }];
       while (true) {
         const { done, value } = await reader.read();
@@ -67,33 +77,86 @@
         const lines = content.split("\n");
         lines.forEach((line) => {
           if (line.startsWith("data:")) {
-            if (line.substring(6) == "[DONE]") return;
+            if (line.substring(6) == "[DONE]") {
+              console.log(lines)
+              return;
+            }
             const jsonObject = JSON.parse(line.substring(6));
             const firstChoice = jsonObject.choices[0];
             if (firstChoice.delta && firstChoice.delta.content) {
               // Return the content value
               const new_content = firstChoice.delta.content;
-              const last_message = messages[messages.length - 1]["content"];
-              // add to last message in messages
-              messages = [
-                ...messages.slice(0, -1),
-                { content: last_message + new_content, role: "assistant" },
-              ];
+              all_content += new_content;
+              // console.log(new_content);
+              if (new_content == "🐰"){
+                current += 1;
+                if (current == 3){
+                  newMessage = "Possible Choices...";
+                }
+                if (current >= 3){
+                  choices = [...choices, choice];
+                }
+              }
+              else{
+                // console.log("what happend?", new_content, current)
+                if (current == 0){
+                  const last_message = messages[messages.length - 1]["content"];
+                  // add to last message in messages
+                  messages = [
+                    ...messages.slice(0, -1),
+                    { content: last_message + new_content, role: "assistant" },
+                  ];
+                }else if (current == 1){
+                  $current_task += new_content;
+                }else if (current == 2){
+                  $progress_of_current_task += new_content;
+                }else{
+                  const last_choice = choices[choices.length - 1];
+                  choices = [
+                    ...choices.slice(0, -1),
+                    last_choice + new_content.replace('\n',''),
+                  ]
+                }
+              }
             }
           }
         });
       }
       newMessage = "";
+      console.log(all_content);
+      $current_task = $current_task.replace('\n','');
+      $progress_of_current_task = $progress_of_current_task.replace('\n','');
+      console.log(choices, $current_task, $progress_of_current_task);
     }
     typing = false;
   }
+
+  // $: console.log($current_task, $progress_of_current_task, choices);
+  let messagesContainer;
+
+  const scrollToBottom = async (node) => {
+    node.scroll({ top: node.scrollHeight, behavior: 'smooth' });
+  }; 
+  afterUpdate(() => {
+    if (messagesContainer){
+      scrollToBottom(messagesContainer);
+    }
+  });
+
+  // when user click the choice, new_message will be set to the choice
+  function handleChoice(event){
+    newMessage = event.target.innerText;
+    choices = [];
+    sendMessage();
+  }
+  
 
 </script>
 
 <ApiKeyModal
   bind:open={openApiKeyModal}
   setOpen={(value) => (openApiKeyModal = value)}
-  setApiKey={(value) => (apiKey = value)}
+  setApiKey={(value) => ($apikey = value)}
 />
 
 {#if hidden}
@@ -103,11 +166,18 @@
     out:fade={{ delay: 100 }}
   >
     <div class="chat-title">Raby🐰</div>
-    <div class="messages-wrapper">
+    <div class="messages-wrapper" bind:this={messagesContainer}>
       {#each messages as message}
         <div class="message {message.role}">
           <div class="message-text" in:fade={{ delay: 80 }}>
             {message.content}
+          </div>
+        </div>
+      {/each}
+      {#each choices as choice}
+        <div class="message choice">
+          <div class="message-text" in:fade={{ delay: 80 }} on:click={handleChoice}>
+            {choice}
           </div>
         </div>
       {/each}
@@ -186,7 +256,7 @@
     border-radius: 16px;
     max-width: 75%;
     word-wrap: break-word;
-    font-size: 14px;
+    font-size: 20px;
     line-height: 1.4;
     text-align: left;
   }
@@ -195,6 +265,15 @@
     background-color: rgb(255, 172, 113);
     color: #fff;
   }
+
+  .message.choice {
+    justify-content: center;
+  }
+
+  .message.choice .message-text {
+    cursor: grab;
+  }
+
 
   .message.assistant .message-text {
     background-color: #fff;

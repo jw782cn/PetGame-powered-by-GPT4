@@ -1,6 +1,7 @@
 <script>
   import { fade } from "svelte/transition";
   import ApiKeyModal from './ApiKeyModal.svelte';
+  import { apikey } from "./store.ts";
 
   let openApiKeyModal = false;
 
@@ -10,7 +11,7 @@
 <ApiKeyModal
   bind:open={openApiKeyModal}
   setOpen={(value) => (openApiKeyModal = value)}
-  setApiKey={(value) => (apiKey = value)}
+  setApiKey={(value) => ($apikey = value)}
 />
 
 <div class="menu" transition:fade={{ duration: 100 }}>
