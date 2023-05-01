@@ -45,7 +45,7 @@
     
   </ul>
   <div class="footer" on:click={stopPropagation}>
-    <a class="hint" href="https://www.buymeacoffee.com/chty627"> Made with ❤️ by Chenran, if you like it, buy me a coffer</a>
+    <a class="hint" href="https://www.buymeacoffee.com/chty627"> Made with ❤️ by Chenran, if you like it, buy me a coffer☕️</a>
   </div>
 </div>
 
