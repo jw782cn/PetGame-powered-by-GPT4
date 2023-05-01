@@ -17,13 +17,16 @@
     <div class="modal" on:click={() => setOpen(false)}>
       <div class="modal-content" on:click={(e) => e.stopPropagation()}>
         <h2 class="modal-title">Enter OpenAI API Key</h2>
+        
         <input
           class="api-key-input"
           type="text"
           bind:value={$apikey}
           placeholder="Your API Key"
         />
+        <p class="hint">P.S. You need openai gpt-4 access...</p>
         <button class="submit-button" on:click={() => setOpen(false)}>Save</button>
+        
       </div>
     </div>
   {/if}
@@ -40,6 +43,8 @@
       height: 100vh;
       background-color: rgba(0, 0, 0, 0.5);
       z-index: 1000;
+      font-family: Comic Sans MS;
+      color: rgb(255, 172, 113);
     }
   
     .modal-content {
@@ -54,6 +59,11 @@
     .modal-title {
       font-size: 2rem;
       margin-bottom: 1rem;
+    }
+
+    .hint {
+      font-size: 14px;
+      margin-bottom: 0.2rem;
     }
   
     .api-key-input {

@@ -1,5 +1,6 @@
 <script>
   import { onMount } from 'svelte';
+  import { selection, game_plot_outline } from './store.ts';
 
   let audio;
   let isPlaying = false;
@@ -99,10 +100,15 @@
 {:else}
 <div class="game-scene-container">
   <div class="game-scene {isHovered || hidden ? 'blurred' : ''}" style="background-image: url({background_path});">
-    <div class="header-wrapper" on:click={()=>{showMenu = true;}}>
+    <div class="header-wrapper logo" on:click={()=>{showMenu = true;}}>
       <h1 class="header">Raby🐰's house</h1>
     </div>
-    
+    <div class="header-wrapper title">
+      <h1 class="header">Task: {$game_plot_outline[$selection]["title"]}</h1>
+    </div>
+    <div class="header-wrapper progress">
+      <h1 class="header">{$game_plot_outline[$selection]["progress"]}%</h1>
+    </div>
     <div class="music-button {spinning ? 'spinning' : ''}" on:click={toggleMusic}>
       <button>𝄞</button>
     </div>
@@ -130,12 +136,9 @@
   color: white;
   margin: 0;
 }
+
 .header-wrapper {
   position: absolute;
-  top: 20px;
-  left: 20px;
-  width: 350px;
-  height: 60px;
   display: flex;
   background-color: #FFC485;
   border-radius: 20px;
@@ -149,6 +152,28 @@
 .header-wrapper:hover {
   transform: scale(1.05);
 }
+
+.header-wrapper.logo {
+  top: 20px;
+  left: 20px;
+  width: 350px;
+  height: 60px;
+}
+
+.header-wrapper.title {
+  top: 20px;
+  left: 400px;
+  width: 600px;
+  height: 60px;
+}
+
+.header-wrapper.progress {
+  top: 20px;
+  right: 100px;
+  width: 300px;
+  height: 60px;
+}
+
 
 .game-scene-container {
     width: 100%;
@@ -168,7 +193,7 @@
   }
 
   .blurred {
-    filter: blur(5px);
+    filter: blur(1px);
   }
 
   img {
@@ -179,9 +204,7 @@
   .animal {
     height: 300px;
     width: 300px;
-    left: 300px;
-    top: 300px;
-    position: absolute;
+    left: 10%;
     cursor: grab;
     /* pointer-events: none; */
     user-select: none;
@@ -189,6 +212,8 @@
   }
 
   .animal-container {
+    left: 5%;
+    top: 30%;
     position: relative;
   }
 
@@ -269,8 +294,8 @@
 
   .music-button {
     position: fixed;
-    top: 10px;
-    right: 10px;
+    top: 20px;
+    right: 20px;
     width: 50px;
     height: 50px;
     cursor: pointer;

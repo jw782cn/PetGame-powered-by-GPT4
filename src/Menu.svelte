@@ -1,11 +1,24 @@
 <script>
   import { fade } from "svelte/transition";
   import ApiKeyModal from './ApiKeyModal.svelte';
-  import { apikey } from "./store.ts";
+  import { apikey, selection, game_plot_outline } from "./store.ts";
 
   let openApiKeyModal = false;
   export let showInfo = false;
+  export let showMenu = false;
+  function getRandomNumber(maxValue) {
+		// console.log("getRandomNumber", maxValue);
+		return Math.floor(Math.random() * maxValue);
+	}
+  $: console.log($selection, "selection");
 
+  function hideMenu() {
+    showMenu = false;
+  }
+
+  function stopPropagation(event) {
+    event.stopPropagation();
+  }
 </script>
 
 
@@ -15,19 +28,40 @@
   setApiKey={(value) => ($apikey = value)}
 />
 
-<div class="menu" transition:fade={{ duration: 100 }}>
-  <h1 class="title">Game Menu</h1>
-  <ul class="menu-items">
+<div class="menu" transition:fade={{ duration: 100 }} on:click={hideMenu}>
+  <h1 class="title" on:click={stopPropagation}>Game Menu</h1>
+  <ul class="menu-items" on:click={stopPropagation}>
+    <li class="menu-item">
+      <a on:click={()=>{$selection = parseInt(getRandomNumber($game_plot_outline.length));}}>
+        Task {$selection + 1}: {$game_plot_outline[$selection]["title"]}
+      </a>
+    </li>
     <li class="menu-item"><a href="/">Restart</a></li>
     <li class="menu-item"><a on:click={() => (showInfo = true)}>Show Info</a></li>
     <li class="menu-item"><a on:click={() => (openApiKeyModal = true)}>Settings</a></li>
     <li class="menu-item">
       <a href="https://github.com/jw782cn/PetGame">About</a>
     </li>
+    
   </ul>
+  <div class="footer" on:click={stopPropagation}>
+    <a class="hint" href="https://www.buymeacoffee.com/chty627"> Made with ❤️ by Chenran, if you like it, buy me a coffer</a>
+  </div>
 </div>
 
 <style>
+  .footer {
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+      padding: 0.5rem;
+      text-align: center;
+    }
+    .hint {
+      font-size: 14px;
+      margin-bottom: 0.2rem;
+      color:rgb(255, 172, 113);
+    }
   .menu {
     background-color: rgb(255, 227, 206);
     color: rgb(255, 172, 113);

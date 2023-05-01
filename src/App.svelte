@@ -4,17 +4,21 @@
 	import Information from "./Information.svelte";
 	import { onMount } from 'svelte';
 	import Menu from './Menu.svelte';
-	import { current_task } from "./store.ts";
+	import { game_plot_outline ,selection} from "./store.ts";
 	import Complete from "./Complete.svelte";
+	import GlobalClickSound from "./GlobalClickSound.svelte";
 
 	let hidden = false;
 	let showMenu = false;
 	let showInfo = true;
 	let space = "room";
 	let name = "Raby";
-	$: console.log(showInfo, "showinfo");
 
+	$: console.log(showInfo, "showinfo");
+	
 	onMount(() => {
+		// $selection = parseInt(getRandomNumber($game_plot_outline.length));
+		console.log($selection);
 		window.addEventListener('keydown', handleKeyDown);
 	});
 
@@ -32,12 +36,12 @@
 	  <Information bind:showInfo={showInfo}/>
 	{/if}
 	{#if showMenu}
-	  <Menu bind:showInfo={showInfo}/>
+	  <Menu bind:showInfo={showInfo} bind:showMenu={showMenu}/>
 	{/if}
-	{#if $current_task == "complete"}
+	{#if $game_plot_outline[$selection]["progress"] == 100}
 	 <Complete />
 	{/if}
-
+	<GlobalClickSound />
 	<main>
 		<Mainroom bind:hidden={hidden} bind:space={space} bind:showMenu={showMenu}/>
 		<ChatBox bind:hidden={hidden} />
@@ -58,7 +62,7 @@
 	}
 
 	.blurred {
-		filter: blur(5px);
+		filter: blur(2px);
 	}
 
 	@media (min-width: 640px) {

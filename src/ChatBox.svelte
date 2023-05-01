@@ -1,8 +1,9 @@
 <script>
   import { fade } from "svelte/transition";
-  import { apikey, task, game_plot_outline, patient_information, username, example, current_task, progress_of_current_task} from "./store.ts";
+  import { apikey, task, game_plot_outline, patient_information, username, example, selection} from "./store.ts";
   import { afterUpdate } from "svelte";
   import ApiKeyModal from './ApiKeyModal.svelte';
+  import { onMount } from "svelte";
 
   let openApiKeyModal = false;
   let choices = [];
@@ -10,13 +11,27 @@
 
   export let hidden = false;
   export let messages = [];
+
+  onMount(() => {
+    messages = $game_plot_outline[$selection]["messages"];
+    choices = $game_plot_outline[$selection]["choices"];
+  });
+
+  function update_messages(){
+    messages = $game_plot_outline[$selection]["messages"];
+    choices = $game_plot_outline[$selection]["choices"];
+  }
+
+  $: if($selection){
+    update_messages();
+  }
   
   // dev mode only
   $apikey = "";
   // $: console.log($apikey);
 
   function assembleMessage() {
-    const system_prompt = task + $game_plot_outline + $patient_information + example;
+    const system_prompt = task + $game_plot_outline[$selection]["plot"] + $patient_information + example;
     let chat_history = "chat history: \n";
     messages.forEach((message) => {
       if (message.role === "user") {
@@ -26,9 +41,9 @@
       }
     });
     chat_history += "Raby: ";
-    const user_input = "current task: " + $current_task + "\n" + "progess: " 
-    + $progress_of_current_task + "\n" + chat_history
-    + "\nREMEMBER: each output line should start with 🐰.";
+    const user_input = "current task: task" + $game_plot_outline[$selection]["current_task"] + "\n" + "progess of current task: " 
+    + $game_plot_outline[$selection]["progress_of_current_task"] + "\n" + chat_history
+    + "\nREMEMBER: each output line should start with 🐰.\n REMEMBER: Last three lines should be written from the perspective of the young adult!";
     return [{ content: system_prompt, role: "system" }, { content: user_input, role: "user" }];
   }
 
@@ -67,8 +82,8 @@
       let all_content = "";
       let current = -1;
       let choice = "";
-      $current_task = "";
-      $progress_of_current_task = "";
+      $game_plot_outline[$selection]["current_task"] = "";
+      $game_plot_outline[$selection]["progress_of_current_task"] = "";
       messages = [...messages, { content: "", role: "assistant" }];
       while (true) {
         const { done, value } = await reader.read();
@@ -108,9 +123,11 @@
                     { content: last_message + new_content, role: "assistant" },
                   ];
                 }else if (current == 1){
-                  $current_task += new_content;
+                  $game_plot_outline[$selection]["current_task"] += new_content;
+                  $game_plot_outline = $game_plot_outline;
                 }else if (current == 2){
-                  $progress_of_current_task += new_content;
+                  $game_plot_outline[$selection]["progress_of_current_task"] += new_content;
+                  $game_plot_outline = $game_plot_outline;
                 }else{
                   const last_choice = choices[choices.length - 1];
                   choices = [
@@ -125,11 +142,28 @@
       }
       newMessage = "";
       console.log(all_content);
-      $current_task = $current_task.replace('\n','');
-      $progress_of_current_task = $progress_of_current_task.replace('\n','');
-      console.log(choices, $current_task, $progress_of_current_task);
+      $game_plot_outline[$selection]["current_task"] = $game_plot_outline[$selection]["current_task"].replace('\n','');
+      $game_plot_outline[$selection]["progress_of_current_task"] = $game_plot_outline[$selection]["progress_of_current_task"].replace('\n','');
+      console.log(choices, $game_plot_outline[$selection]["current_task"], $game_plot_outline[$selection]["progress_of_current_task"]);
+      $game_plot_outline = $game_plot_outline;
+      if ($game_plot_outline[$selection]["current_task"] === "complete"){
+        $game_plot_outline[$selection]["progress"] = 100;
+      }
+      else{
+        const current_task = parseInt($game_plot_outline[$selection]["current_task"]);
+        const progress_of_current_task = parseFloat($game_plot_outline[$selection]["progress_of_current_task"]);
+        const task_num = $game_plot_outline[$selection]["task"];
+        // console.log(current_task, progress_of_current_task, task_num);
+        const progress = Math.floor((current_task + progress_of_current_task - 1) * 100 / task_num); 
+        $game_plot_outline[$selection]["progress"] = progress;
+        // console.log(progress);
+      }
+      $game_plot_outline = $game_plot_outline;
     }
     typing = false;
+    $game_plot_outline[$selection]["messages"] = messages;
+    $game_plot_outline[$selection]["choices"] = choices;
+    $game_plot_outline = $game_plot_outline;
   }
 
   // $: console.log($current_task, $progress_of_current_task, choices);
@@ -146,6 +180,9 @@
 
   // when user click the choice, new_message will be set to the choice
   function handleChoice(event){
+    if(typing){
+      return;
+    }
     newMessage = event.target.innerText;
     choices = [];
     sendMessage();
@@ -215,8 +252,8 @@
   .chat-container {
     display: flex;
     flex-direction: column;
-    height: 500px;
-    width: 600px;
+    height: 70%;
+    width: 50%;
     max-width: 600px;
     border: 1px solid #ccc;
     background-color: #f2f2f2;
@@ -226,11 +263,11 @@
     padding-bottom: 6px;
     position: fixed;
     overflow-y: scroll;
-    bottom: 100px; /* Add this line */
-    right: 100px; /* Add this line */
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Add this line */
+    top: 15%; 
+    right: 8%; 
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
     font-family: Comic Sans MS;
-    z-index: 1; /* Add this line */
+    z-index: 1; 
   }
 
   .chat-title {
@@ -242,13 +279,16 @@
     text-shadow: 1px 1px 2px rgb(248, 106, 5);
   }
 
-  /* Add the following style block */
   .messages-wrapper {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
     margin-bottom: 16px;
+  }
+
+  .messages-wrapper::-webkit-scrollbar {
+    display: none;
   }
 
   .message {
