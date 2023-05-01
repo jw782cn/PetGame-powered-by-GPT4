@@ -1,15 +1,17 @@
 # PetGame
-🐾 [PetGame](https://superficial-test.surge.sh/): A Virtual Friend for Addiction Recovery 🌈
+🐾 [PetGame](https://superficial-test.surge.sh/): A Virtual Friend for Addiction Recovery 🌈 Watch [Demo](https://youtu.be/VbIBCrMBFac) here!
 
 Welcome to PetGame 🐶🐱🦊, a virtual pet game designed to support young adults (ages 20-25) in their substance abuse recovery journey! By caring for an adorable virtual pet 🐾, users develop empathy, self-care awareness, and essential skills to overcome addiction challenges.
 
 🔬 Our goal is to bridge the gap between clinical care and daily life, making recovery support accessible and engaging. We utilize cute pet avatars, interactive storylines, and AI-powered pet conversations 🤖💬 to create a personalized experience that encourages daily engagement.
 
-🎮 As users nurture their virtual pets, they also learn to care for themselves 💞. Our app features daily self-assessments, easy access to support, and a rewarding game experience that helps develop self-awareness and self-care skills. 🌟
+🎮 As users help their virtual pets, they also learn to care for themselves 💞. Our app features daily self-assessments, easy access to support, and a rewarding game experience that helps develop self-awareness and self-care skills. 🌟
 
 🌱 Join the adventure and grow together with your virtual pet as you overcome obstacles and build a brighter, healthier future! 🌈🌤️
 
-💌 Created with love by Chenran Ning (cn257@cornell.edu) built in svelte
+💌 Created with love by Chenran Ning (cn257@cornell.edu) built in svelte. If you like this project, buy me a [coffee](https://www.buymeacoffee.com/chty627)!
+
+![CleanShot 2023-04-30 at 23.40.46@2x](https://p.ipic.vip/6mpw3x.png)
 
 ## Problem Definition
 
