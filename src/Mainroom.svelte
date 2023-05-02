@@ -147,7 +147,8 @@
   align-items: center;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
-  box-shadow: 0 4px 8px #FFA848; /* Add box-shadow here */
+  box-shadow: 0 4px 8px #FFA848; 
+  user-select: none;
 }
 
 .header-wrapper:hover {

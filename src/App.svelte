@@ -78,4 +78,8 @@
 			max-width: none;
 		}
 	}
+	p {
+		font-family: 'Comic Sans MS';
+		user-select: none;
+	}
 </style>

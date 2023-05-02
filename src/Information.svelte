@@ -68,13 +68,8 @@
       font-weight: bold;
       text-align: center;
       margin-bottom: 1rem;
+      user-select: none;
     }
-  
-    .hint {
-      font-size: 1.2rem;
-      color: #fff;
-      margin-top: 1rem;
-      opacity: 0.8;
-    }
+
   </style>
   
