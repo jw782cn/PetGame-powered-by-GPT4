@@ -48,10 +48,10 @@ export const game_plot_outline = writable([
     plot: `
     Game Plot Outline:
 Title: Raby and the Friendship Triangle
-Introduction: The teenager meets Raby, who is feeling hurt and left out after a conflict with its best friend, a tiger. The tiger has made a new friend, a wolf, who doesn't like Raby, causing the tiger to spend less time with Raby. The teenager must help Raby navigate this situation and learn valuable coping skills in the process.
-Task 1 - Rebuilding the friendship: The teenager needs to help Raby find a way to reconnect with the tiger and address the issue without causing further conflict. They can brainstorm ideas and strategies together, focusing on open communication and understanding different perspectives. This task teaches the teenager the importance of effective communication and problem-solving in maintaining friendships.
+Introduction: The young adult meets Raby, who is feeling hurt and left out after a conflict with its best friend, a tiger. The tiger has made a new friend, a wolf, who doesn't like Raby, causing the tiger to spend less time with Raby. The young adult must help Raby navigate this situation and learn valuable coping skills in the process.
+Task 1 - Rebuilding the friendship: The young adult needs to help Raby find a way to reconnect with the tiger and address the issue without causing further conflict. They can brainstorm ideas and strategies together, focusing on open communication and understanding different perspectives. This task teaches the young adult the importance of effective communication and problem-solving in maintaining friendships.
 Resolution: Raby reaches out to the tiger and initiates a conversation about their friendship, expressing its feelings and concerns. Together, they work on finding a balance between their friendships, ensuring that Raby and the tiger can maintain their bond while respecting the tiger's new friendship with the wolf.
-Goal fulfilled: The teenager has helped Raby address the challenges in its friendship with the tiger and has learned essential coping skills that can be applied to their own life.
+Goal fulfilled: The young adult has helped Raby address the challenges in its friendship with the tiger and has learned essential coping skills that can be applied to their own life.
     `,
     task: 1,
     current_task: "1",
