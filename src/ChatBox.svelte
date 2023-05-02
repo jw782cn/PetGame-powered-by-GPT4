@@ -101,7 +101,7 @@
     const system_prompt =
       task +
       $game_plot_outline[$selection]["plot"] +
-      "\nRaby is now talking to a young adult, here's their info:\n" +
+      "\nRaby is now talking to a young adult, here's their info, please use this info to answer questions.\n" +
       $patient_information +
       example;
     let chat_history = "chat history: \n";

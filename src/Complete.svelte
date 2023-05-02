@@ -20,15 +20,11 @@
   }
 
   function isComplete() {
-    $game_plot_outline.forEach((element) => {
-      if (element["progress"] < 100) {
-        return false;
-      }
-    });
-    return true;
+    $complete = $game_plot_outline.every((element) => element["progress"] >= 100);
   }
 
-  $: $game_plot_outline, $complete = isComplete();
+  $: $game_plot_outline, isComplete();
+  $: console.log("complet", $complete);
 </script>
 
 <div

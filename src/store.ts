@@ -19,8 +19,8 @@ export const game_plot_outline = writable([
     `,
     task: 1,
     current_task: "1",
-    progress_of_current_task: "0",
-    progress: 0,
+    progress_of_current_task: "0.95",
+    progress: 95,
     messages:[],
     choices:[],
   },
@@ -126,7 +126,7 @@ Output Guidance:
 export const get_user_info_prompt = `
 Summarize the young adult's information into a sentence based chat history below. Please use the following format:
 ===
-Format:
+Output:
 Name:
 Information:
 ===
