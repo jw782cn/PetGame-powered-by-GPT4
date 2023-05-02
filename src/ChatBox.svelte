@@ -17,7 +17,6 @@
 
   let openApiKeyModal = false;
   let choices = [];
-  let firstTimeHint = "Your task to help Raby...Say hi to Raby!";
   let talktoofast = "";
 
   export let hidden = false;
@@ -343,7 +342,7 @@
     <div class="messages-wrapper" bind:this={messagesContainer}>
       <div class="message hint">
         <div class="message-text" in:fade={{ delay: 500 }}>
-          {firstTimeHint}
+          {$game_plot_outline[$selection]["hint"]}
         </div>
       </div>
       {#each messages as message}
