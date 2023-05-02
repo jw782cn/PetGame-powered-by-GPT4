@@ -1,8 +1,7 @@
 <script>
-    import { apikey } from "./store.ts";
+    import { apikey, model} from "./store.ts";
     export let open = false;
     export let setOpen;
-    export let setApiKey;
   
     function closeOnEscape(event) {
       if (event.key === "Escape") {
@@ -24,7 +23,8 @@
           bind:value={$apikey}
           placeholder="Your API Key"
         />
-        <p class="hint">P.S. You need openai gpt-4 access...</p>
+        <p class="hint">Currently Powered by {model}</p>
+        <p class="hint">P.S. You need openai {model} access...</p>
         <button class="submit-button" on:click={() => setOpen(false)}>Save</button>
         
       </div>

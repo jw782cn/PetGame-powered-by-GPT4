@@ -6,6 +6,7 @@
   let isPlaying = false;
   let spinning = false;
   export let showMenu = false;
+  export let showTask = false;
 
   onMount(async () => {
     try {
@@ -103,8 +104,8 @@
     <div class="header-wrapper logo" on:click={()=>{showMenu = true;}}>
       <h1 class="header">Raby🐰's house</h1>
     </div>
-    <div class="header-wrapper title">
-      <h1 class="header">Task: {$game_plot_outline[$selection]["title"]}</h1>
+    <div class="header-wrapper title" on:click={()=>{showTask = true;}}>
+      <h1 class="header">{$game_plot_outline[$selection]["title"]}</h1>
     </div>
     <div class="header-wrapper progress">
       <h1 class="header">{$game_plot_outline[$selection]["progress"]}%</h1>

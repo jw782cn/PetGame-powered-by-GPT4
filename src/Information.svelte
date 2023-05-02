@@ -4,25 +4,24 @@
     import { description } from './store.ts';
   
     let currentIndex = 0;
-    let showHint = true;
     export let showInfo = true;
     $: text = $description[currentIndex];
-    $: console.log(text);
   
     onMount(() => {
-      setTimeout(() => {
-        showHint = false;
-      }, 3000);
     });
-  
-    function handleKeydown(event) {
-      if (event.key === 'Enter') {
-        if (currentIndex < $description.length - 1) {
+
+    function nextPage(){
+      if (currentIndex < $description.length - 1) {
           currentIndex += 1;
         }
         else {
             showInfo = false;
         }
+    }
+  
+    function handleKeydown(event) {
+      if (event.key === 'Enter') {
+        nextPage();
       }
     }
   </script>
@@ -32,12 +31,10 @@
     on:keydown={handleKeydown}
     tabindex="0"
     transition:fade={{ duration: 100 }}
+    on:click={nextPage}
   >
   <div class="text-wrapper">
     <p class="text">{text}</p>
-    {#if currentIndex === 0}
-      <p class="hint">Press Enter</p>
-    {/if}
   </div>
   </div>
   

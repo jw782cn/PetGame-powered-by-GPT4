@@ -4,17 +4,22 @@
 	import Information from "./Information.svelte";
 	import { onMount } from 'svelte';
 	import Menu from './Menu.svelte';
-	import { game_plot_outline ,selection} from "./store.ts";
+	import { game_plot_outline , selection, model} from "./store.ts";
 	import Complete from "./Complete.svelte";
 	import GlobalClickSound from "./GlobalClickSound.svelte";
+	import Tasks from "./Tasks.svelte";
 
 	let hidden = false;
 	let showMenu = false;
 	let showInfo = true;
+	let showTask = false;
+	let showComplete = false;
 	let space = "room";
 	let name = "Raby";
 
 	$: console.log(showInfo, "showinfo");
+	$: console.log(showComplete, "showcomplete");
+    $: console.log("now using model", model);
 	
 	onMount(() => {
 		// $selection = parseInt(getRandomNumber($game_plot_outline.length));
@@ -36,15 +41,18 @@
 	  <Information bind:showInfo={showInfo}/>
 	{/if}
 	{#if showMenu}
-	  <Menu bind:showInfo={showInfo} bind:showMenu={showMenu}/>
+	  <Menu bind:showInfo={showInfo} bind:showMenu={showMenu} bind:showTask={showTask} />
 	{/if}
-	{#if $game_plot_outline[$selection]["progress"] == 100}
-	 <Complete />
+	{#if showTask}
+	  <Tasks bind:showTask={showTask} />
+	{/if}
+	{#if showComplete && $game_plot_outline[$selection]["progress"] == 100}
+	 <Complete bind:showComplete={showComplete}/>
 	{/if}
 	<GlobalClickSound />
 	<main>
-		<Mainroom bind:hidden={hidden} bind:space={space} bind:showMenu={showMenu}/>
-		<ChatBox bind:hidden={hidden} />
+		<Mainroom bind:hidden={hidden} bind:space={space} bind:showMenu={showMenu} bind:showTask={showTask}/>
+		<ChatBox bind:hidden={hidden} bind:showComplete={showComplete}/>
 	</main>
 </div>
 
