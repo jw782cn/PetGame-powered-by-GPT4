@@ -24,7 +24,7 @@
   }
 
   $: $game_plot_outline, isComplete();
-  $: console.log("complet", $complete);
+  // $: console.log("complet", $complete);
 </script>
 
 <div

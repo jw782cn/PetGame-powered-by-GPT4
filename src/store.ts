@@ -4,7 +4,7 @@ import { writable } from "svelte/store";
 export const apikey = writable("");
 export const username = writable("Young Adult");
 export const selection = writable(0);
-export const model = "gpt-4";
+export const model = "gpt-4-0314";
 export const complete = writable(false);
 export const game_plot_outline = writable([
   {

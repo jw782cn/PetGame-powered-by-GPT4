@@ -192,7 +192,7 @@
             headers: {
               "Content-Type": "application/json",
               Authorization: "Bearer " + $apikey,
-              "OpenAI-Organization": "org-8EQxuW6VB8Xs0WfTsuByGPVL",
+              // "OpenAI-Organization": "org-8EQxuW6VB8Xs0WfTsuByGPVL",
             },
             body: JSON.stringify({
               model: model,
