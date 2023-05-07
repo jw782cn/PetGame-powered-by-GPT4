@@ -79,6 +79,23 @@ Goal fulfilled: The young adult has helped Raby address the challenges in its fr
     messages:[],
     choices:[],
   },
+  {
+    title: "Raby's Care",
+    hint: "Raby's feeling bad, talk to Raby!",
+    plot: `
+        Title: Raby's Care
+Introduction: Raby, the charming rabbit from the forest, has a headache due to staying up late the previous night. The young adult, who is a good friend of Raby, learns about this and decides to help Raby recover. The forest setting is serene and full of resources that might assist in Raby's recovery.
+Task 1: The young adult needs to guide Raby through a self-care routine. This might involve finding natural remedies in the forest, such as special herbs, encouraging Raby to rest, ensuring Raby stays hydrated, and helping Raby to establish a healthier sleep schedule. The task is simple, but it requires empathy, kindness, and problem-solving skills.
+Resolution: By taking care of Raby, the young adult helps the rabbit to recover from the headache. Raby not only feels better but also learns the importance of self-care and a healthy lifestyle. The young adult's actions have a positive impact, and Raby thanks them for their help.
+Goal fulfilled: The young adult learns the importance of empathy, care, and friendship. They also understand the consequences of neglecting self-care and the benefits of a healthy sleep schedule. Through helping Raby, they also grow in their problem-solving skills and ability to care for others.
+        `,
+    task: 1,
+    current_task: "1",
+    progress_of_current_task: "0",
+    progress: 0,
+    messages:[],
+    choices:[],
+  },
 ]);
 
 export const patient_information = writable(`None`);
