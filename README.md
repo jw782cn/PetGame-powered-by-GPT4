@@ -1,9 +1,9 @@
-# PetGame
+# PetGame powered by GPT4
 🐾 [PetGame](https://superficial-test.surge.sh/): A Virtual Friend for Addiction Recovery 🌈 Watch [Demo](https://youtu.be/VbIBCrMBFac) here!
 
 ![CleanShot 2023-04-30 at 23.40.46@2x](https://p.ipic.vip/6mpw3x.png)
 
-Welcome to PetGame 🐶🐱🦊, a virtual pet game designed to support young adults (ages 20-25) in their substance abuse recovery journey! By caring for an adorable virtual pet 🐾, users develop empathy, self-care awareness, and essential skills to overcome addiction challenges.
+Welcome to PetGame Raby🐶🐱🦊, a virtual pet game designed to support young adults (ages 20-25) in their substance abuse recovery journey! By caring for an adorable virtual pet 🐾, users develop empathy, self-care awareness, and essential skills to overcome addiction challenges.
 
 🔬 Our goal is to bridge the gap between clinical care and daily life, making recovery support accessible and engaging. We utilize cute pet avatars, interactive storylines, and AI-powered pet conversations 🤖💬 to create a personalized experience that encourages daily engagement.
 
