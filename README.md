@@ -1,5 +1,5 @@
 # PetGame powered by GPT4
-🐾 [PetGame](https://superficial-test.surge.sh/): A Virtual Friend for Addiction Recovery 🌈 Watch [Demo](https://youtu.be/VbIBCrMBFac) here!
+🐾 [PetGame](https://superficial-test.surge.sh/) (click me to play online!): A Virtual Friend for Addiction Recovery 🌈 Watch [Demo](https://www.youtube.com/watch?v=EivsbDk-yGk) here!
 
 ![CleanShot 2023-04-30 at 23.40.46@2x](https://p.ipic.vip/6mpw3x.png)
 
